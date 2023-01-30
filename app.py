@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import pymongo
 import os
 from dotenv import load_dotenv
+import hashlib
 
 #loading the mongodb_url
 load_dotenv()
@@ -30,4 +31,23 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+        conPassword = request.form.get('confirmPassword')
+
+        if password != conPassword:
+            error = "passwords do not match"
+            return redirect('/signup')
+
+        if collection.find({"username": username}) == None:
+            error = "username is taken"
+            return redirect('/signup')
+
+        #not working properly
+        hashedPassword = hashlib.sha256(password.encode('utf8'))
+        collection.insert_one({"username": username, "password": hashedPassword.digest(), "todo": []})
+
+        return redirect("/login")
+    else:
+        return render_template('signup.html', error="")
