@@ -48,9 +48,30 @@ def todo():
         if request.method == "POST":
             pass
         else:
-            return render_template('todo.html', user=username)
+            return render_template('todo.html')
     else:
         return redirect("/login")
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    if "username" in session:
+        username = session["username"]
+        if request.method == "POST":
+
+            if "logout_button" in request.form:
+                session.pop("username", None)
+                return redirect("/login")
+
+            elif 'todo_button' in request.form:
+                return redirect("/todo")
+
+            else:
+                return redirect(request.url)
+        else:
+            return render_template("dashboard.html", user=username)
+    else:
+        return redirect("/login")
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -75,7 +96,7 @@ def login():
 
         session["username"] = username
 
-        return redirect("/todo")
+        return redirect("/dashboard")
         
     else:
         return render_template('login.html')
