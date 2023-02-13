@@ -7,9 +7,18 @@
 </head>
 <body>
     <h1>Todo</h1>
+    <p>write it again to remove it</p>
     <form method="post">
         <input name="userInput" type="text">
-        <button type="submit">add</button>
+        <button type="submit">add/remove</button>
+        <button name="goToDashboard" value="Goto">Go back to dashboard</button>
     </form>
+
+    {% for i in todos %}
+    <ul>
+        <h2>{{ i }}</h2>
+    </ul>
+    {% endfor %}
+    
 </body>
 </html>

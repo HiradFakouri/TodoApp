@@ -51,10 +51,28 @@ def index():
 def todo():
     if "username" in session:
         username = session["username"]
+
+        todos = []
+
+        data = collection.find_one({"username": username})
+        todos = data["todo"]
+
         if request.method == "POST":
-            pass
+            if "goToDashboard" in request.form:
+                return redirect("/dashboard")
+            
+            todo = request.form.get("userInput")
+
+            if todo in todos:
+                todos.remove(todo)
+                collection.update_one({"username": username}, {"$set": {"todo": todos}})
+            else:
+                todos.append(todo)
+                collection.update_one({"username": username}, {"$set": {"todo": todos}})
+
+            return render_template('todo.html', todos=todos)
         else:
-            return render_template('todo.html')
+            return render_template('todo.html', todos=todos)
     else:
         return redirect("/login")
 
