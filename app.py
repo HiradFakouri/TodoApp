@@ -37,9 +37,15 @@ app = Flask(__name__)
 #secret key
 app.config['SECRET_KEY'] = 'secret_key'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        if "login" in request.form:
+            return redirect("/login")
+        elif "signup" in request.form:
+            return redirect("/signup")
+    else:
+        return render_template("index.html")
 
 @app.route('/todo', methods=['GET', 'POST'])
 def todo():
