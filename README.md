@@ -35,4 +35,4 @@ A simple and efficient **Todo Application** built with Flask, designed to help y
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/todoapp.git
+   git clone https://github.com/HiradFakouri/TodoApp
