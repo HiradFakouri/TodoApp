@@ -24,7 +24,6 @@ A simple and efficient **Todo Application** built with Flask, designed to help y
 1. Users can **sign up** or **log in** to their account.
 2. Once logged in:
    - Create tasks by entering task descriptions.
-   - View your task list, categorized by **pending** and **completed**.
    - Edit or delete tasks as needed.
 3. Tasks are saved in a MongoDB database, so your progress is never lost.
 4. Log out securely when done.
